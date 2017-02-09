@@ -7,17 +7,30 @@ var webpack = require("webpack");
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
+var TEM_PATH = path.resolve(APP_PATH, 'templates');
 
 module.exports = {
     entry: APP_PATH,
-    devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-eval-source-map',
     output: {
         path: BUILD_PATH,
         filename: 'bundle.js'
     },
     plugins: [
+        new webpack.optimize.CommonsChunkPlugin("vendors", 'vendors.js'),
         new HtmlwebpackPlugin({
-            title: "Hello World app"
+            title: "Hello World app",
+            template: path.resolve(TEM_PATH, 'index.html'),
+            filename: "index.html",
+            chunks: ['app', 'vendors'],
+            inject: 'body'
+        }),
+        new HtmlwebpackPlugin({
+            title: "Hello Mobile app",
+            template: path.resolve(TEM_PATH, 'mobile.html'),
+            filename: "mobile.html",
+            chunks: ['mobile', 'vendors'],
+            inject: 'body'
         }),
         new webpack.ProvidePlugin({
             $: "jquery",
@@ -40,7 +53,7 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.scss$/,
-            loaders: ['style', 'css', 'sass'],
+            loader: 'style!css?modules!sass?sourceMap',
             include: APP_PATH
         }, {
             test: /\.(png|jpg)$/,
@@ -48,10 +61,7 @@ module.exports = {
         }, {
             test: /\.jsx?$/,
             loader: 'babel',
-            include: APP_PATH,
-            query: {
-                presets: ['es2015']
-            }
+            include: APP_PATH
         }]
     }
 };
