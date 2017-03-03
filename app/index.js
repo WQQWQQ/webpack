@@ -19,8 +19,9 @@ import './plugin.js';
 let app = document.createElement("div");
 const myPromise = Promise.resolve(42);
 myPromise.then((number) => {
-	$('body').append('<p>' + number + '</p>');
+	$('hl').append('<p>' + number + '</p>');
 	$("p").greenify();
+	console.log(global);
 });
 app.innerHTML = '<h1>saddsadsadasd</h1>';
 document.body.appendChild(app);

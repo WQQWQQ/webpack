@@ -9,12 +9,17 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 var TEM_PATH = path.resolve(APP_PATH, 'templates');
 
+
 module.exports = {
-    entry: APP_PATH,
+    entry: {
+        app: path.resolve(APP_PATH, "index.js"),
+        vendors: ["jquery"],
+        mobile: path.resolve(APP_PATH, 'mobile.js')
+    },
     devtool: 'cheap-module-eval-source-map',
     output: {
         path: BUILD_PATH,
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendors", 'vendors.js'),
