@@ -179,7 +179,7 @@
 	 *   , role: 'SW Engineer'
 	 * }
 	 */
-	"laxcomma": false,
+	"laxcomma": true,
 
 	/**
 	 * 允许在循环语句中产生函数
@@ -198,6 +198,6 @@
 	 *
 	 * 默认开启
 	 */
-	"unused": true
+	"unused": false
 
 }
